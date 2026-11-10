@@ -1,0 +1,16 @@
+name: Check app
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --check app.mjs
+      - run: node verify.mjs
+      - run: node audio.test.mjs
+      - run: node games/starlight/engine.test.mjs
